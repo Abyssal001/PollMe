@@ -49,7 +49,7 @@ def poll(id):
     p = query_db('select * from polls where id = ?', [id], one=True)
     if p is None:
         abort(404)
-    v = query_db('select * from votes where ip = ?', [request.remote_addr])
+    v = query_db('select * from votes where poll_id = ? and ip = ?', [id, request.remote_addr])
     options = query_db('select * from options where poll_id = ?', [id])
     if v:
         total = 0
@@ -82,7 +82,7 @@ def create():
         i += 1
         g.db.execute('insert into options (poll_id, option, content) VALUES (?, ?, ?)', [row_id, i, options[j]])
     g.db.commit()
-    return redirect(url_for('poll', id=1))
+    return redirect(url_for('poll', id=row_id))
 
 
 @app.route('/polls/<id>', methods=['POST'])
