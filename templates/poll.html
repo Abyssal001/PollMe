@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }} - 请投票！</title>
+    <title>{{ poll.question }} - 请投票！</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
     	html {
@@ -46,6 +46,7 @@
 		    display: flex;
 		    position: relative;
 		    border-top: 2px solid #b1b874;
+            cursor: pointer;
     	}
     	input[type="radio"] {
     		position: absolute;
@@ -54,8 +55,7 @@
 		    width: 30px;
 		    height: 30px;
 		    opacity: 0;
-		    z-index: 2;
-		    cursor: pointer;
+		    z-index: -2;
     	}
     	label {
 		    min-height: 60px;
@@ -64,7 +64,6 @@
 		    padding: 0 14px 0 45px;
 		    word-break: break-word;
 		    line-height: 30px;
-		    cursor: pointer;
             border: 0;
     		background: 0;
     	}
@@ -76,32 +75,29 @@
 		    font-weight: normal;
     	}
     	label::before {
-		    top: 0;
-		    left: 0;
 		    background: #fff;
 		    border: 2px solid #e4b827;
 		    width: 30px;
 		    height: 30px;
 	        content: '';
 		    position: absolute;
-		    pointer-events: none;
 	        left: 14px;
 	    	top: 15px;
     	}
     	label::after {
-		    top: 10px;
-    		left: 19px;
 		    display: none;
-		    top: -5px;
-		    left: 5px;
+		    top: 10px;
+		    left: 18px;
 		    width: 30px;
 		    height: 30px;
 		    background: url({{ url_for('static', filename = 'images/check.svg') }}) center/contain no-repeat;
 		    z-index: 2;
 		    content: '';
 		    position: absolute;
-		    pointer-events: none;images
     	}
+        label.checked::after {
+            display: inline-block;
+        }
     	button {
 		    display: block;
 		    width: 100%;
@@ -124,21 +120,17 @@
     </style>
 </head>
 <body>
-    <form>
-    	<h2 id="question">这是一个简单的问题？</h2>
+    <form action="{{ url_for('vote', id=poll.id) }}" method="post" autocomplete="off" target="_self">
+    	<h2 id="question">{{ poll.question }}</h2>
     	<div id="form-body">
+            {% for option in options %}
 	    	<div class="options">
-			    <input type="radio" selected>
+			    <input type="radio" name="option" value="{{ option.option }}">
 			    <label>
-			    	<span>这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项</span>
+			    	<span>{{ option.content }}</span>
 			    </label>
 	    	</div>
-	    	<div class="options">
-			    <input type="radio">
-			    <label>
-			    	<span>这是另外一个选项</span>
-			    </label>
-	    	</div>
+            {% endfor %}
     	</div>
 	    <div id="form-footer">
 		    <button type="submit" id="vote-btn">Vote</button>
@@ -153,5 +145,15 @@
 	$('#copy-link-btn').click(function() {
 		$(this).html("&#10003;");
 	});
+    $('.options').click(function () {
+        for (var i of $('.options input')) {
+            $(i).removeAttr("checked");
+        }
+        for (var i of $('.options label')) {
+            $(i).removeClass("checked");
+        }
+        $(this).children("input").attr("checked", "true");
+        $(this).children("label").addClass("checked")
+    });
 </script>
 </html>

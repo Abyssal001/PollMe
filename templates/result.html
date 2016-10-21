@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }} - 结果</title>
+    <title>{{ poll.question }} - 结果</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
     	html {
@@ -107,6 +107,7 @@
 		    border-top: 2px solid #b1b874;
 		    height: 40px;
 		    line-height: 38px;
+            overflow: hidden;
     	}
     	.percentage-bar {
 		    height: 38px;
@@ -119,7 +120,7 @@
     	.option-stats {
 		    font-weight: bold;
 		    text-align: right;
-		    width: 74px;
+		    width: 80px;
 	        font-size: 18px;
 		    padding-right: 11px;
     	}
@@ -130,33 +131,25 @@
     </style>
 </head>
 <body>
-	<h2 id="question">这是一个简单的问题？</h2>
+	<h2 id="question">{{ poll.question }}</h2>
 	<div id="form-body">
+        {% for option in options %}
     	<div class="options">
 		    <p class="option-text">
-		    	这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项
-		    	<span class="option-count">23</span>
+		    	{{ option.content }}
+		    	<span class="option-count">{{ option.voters }}</span>
 		    </p>
 		    <div class="option-data">
-		    	<div class="percentage-bar" style="transform: translateX(-10%);"></div>
-		    	<div class="option-stats">10</div>
+		    	<div class="percentage-bar" style="transform: translateX({{ option.voters * 100.0 / total - 100 }}%);"></div>
+		    	<div class="option-stats">{{ option.voters * 100.0 / total }}</div>
 		    </div>
     	</div>
-    	<div class="options">
-		    <p class="option-text">
-		    	这是另外一个选项
-		    	<span class="option-count">12</span>
-		    </p>
-		    <div class="option-data">
-		    	<div class="percentage-bar"style="transform: translateX(-80%);></div>
-		    	<div class="option-stats">10</div>
-		    </div>
-    	</div>
+        {% endfor %}
 	</div>
 	<div style="font-weight: bold; margin-left: 20px;">
-		<span style="font-size: 30px">123</span> Votes
+		<span style="font-size: 30px">{{ total }}</span> Votes
 		<span style="font-size: 16px; float: right; margin-right: 20px; color: #7c805d;">
-			Asked: <span style="vertical-align: sub; font-size: 14px;">2016.12.1</span>
+			Asked: <span style="vertical-align: sub; font-size: 14px;">{{ create_at }}</span>
 		</span>
 	</div>
     <div id="form-footer">

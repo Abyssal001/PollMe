@@ -11,7 +11,8 @@ CREATE TABLE options (
   id integer PRIMARY KEY AUTOINCREMENT,
   poll_id integer NOT NULL,
   option integer NOT NULL,
-  content text NOT NULL
+  content text NOT NULL,
+  voters integer DEFAULT 0
 );
 
 DROP TABLE IF EXISTS votes;
