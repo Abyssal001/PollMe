@@ -55,9 +55,23 @@ def poll(id):
 
 @app.route('/polls', methods=['POST'])
 def create():
-    g.db.execute('insert into polls (question, is_multi, create_at) VALUES (?, ?, ?)', [question, is_multi, int(time.time())])
+    question = request.form.get('question', '')
+    i = 0
+    options = {}
+    while request.form.get('option-' + str(i)) is not None:
+        option = request.form.get('option-' + str(i))
+        if (option != ""):
+            options['option-' + str(i)] = option
+        i += 1
+    g.db.execute('insert into polls (question, is_multi, create_at) VALUES (?, ?, ?)', [question, False, int(time.time())])
+    row_id = g.db.cursor().lastrowid
+    i = 0
+    for j in options:
+        i += 1
+        g.db.execute('insert into options (poll_id, option, content)', [row_id, i, options[j]])
     g.db.commit()
-    return redirect(url_for('poll'))
+    print row_id
+    return redirect(url_for('poll', id=1))
 
 
 @app.route('/polls/<id>', methods=['POST'])

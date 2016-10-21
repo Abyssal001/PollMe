@@ -10,6 +10,7 @@
     	}
     	* {
     		box-sizing: border-box;
+			user-select: none;
     	}
     	a, input, button { 
     		outline:none; 
@@ -54,16 +55,19 @@
 		    cursor: pointer;
     	}
     	.option-text {
-    		margin: 0 0 0 14px;
 		    display: block;
-		    font-size: 20px;
+		    font-size: 18px;
 		    line-height: 30px;
 		    padding-top: 15px;
 		    padding-bottom: 15px;
+		    margin-left: 15px;
 	        border: 0;
 		    background: 0;
 		    padding: 0 14px 0 0;
 	        flex-grow: 1;
+    	}
+    	.option-count {
+    		margin: 0 0 0 14px;
     	}
     	p span {
 		    display: inline-block;
@@ -110,11 +114,18 @@
 		    flex: 1;
 		    margin-left: -14px!important;
     		background: rgb(31, 119, 180);
+    		transition: .1s transform ease-in-out;
     	}
     	.option-stats {
 		    font-weight: bold;
 		    text-align: right;
 		    width: 74px;
+	        font-size: 18px;
+		    padding-right: 11px;
+    	}
+    	.option-stats::after {
+		    content: '\0025';
+			display: inline;
     	}
     </style>
 </head>
@@ -127,7 +138,7 @@
 		    	<span class="option-count">23</span>
 		    </p>
 		    <div class="option-data">
-		    	<div class="percentage-bar"></div>
+		    	<div class="percentage-bar" style="transform: translateX(-10%);"></div>
 		    	<div class="option-stats">10</div>
 		    </div>
     	</div>
@@ -137,10 +148,16 @@
 		    	<span class="option-count">12</span>
 		    </p>
 		    <div class="option-data">
-		    	<div class="percentage-bar"></div>
+		    	<div class="percentage-bar"style="transform: translateX(-80%);></div>
 		    	<div class="option-stats">10</div>
 		    </div>
     	</div>
+	</div>
+	<div style="font-weight: bold; margin-left: 20px;">
+		<span style="font-size: 30px">123</span> Votes
+		<span style="font-size: 16px; float: right; margin-right: 20px; color: #7c805d;">
+			Asked: <span style="vertical-align: sub; font-size: 14px;">2016.12.1</span>
+		</span>
 	</div>
     <div id="form-footer">
 		<a id="back-btn" class="button" href="{{ request.url_root }}">Back</a>
