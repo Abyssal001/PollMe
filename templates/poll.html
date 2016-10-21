@@ -146,10 +146,10 @@
 		$(this).html("&#10003;");
 	});
     $('.options').click(function () {
-        for (var i of $('.options input')) {
+        for (var i in $('.options input')) {
             $(i).removeAttr("checked");
         }
-        for (var i of $('.options label')) {
+        for (var i in $('.options label')) {
             $(i).removeClass("checked");
         }
         $(this).children("input").attr("checked", "true");

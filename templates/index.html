@@ -106,7 +106,7 @@
 	var option_num = 3;
 	$('form').submit(function() {
 		var valid_option_num = 0
-		for(var i of $('.option')) {
+		for(var i in $('.option')) {
 			if ($(i).val() != "") {
 				valid_option_num += 1;
 			}
