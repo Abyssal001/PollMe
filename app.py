@@ -89,6 +89,9 @@ def create():
 def vote(id):
     ip = request.remote_addr
     option = request.form.get('option', '1')
+    v = query_db('select * from votes where poll_id = ? and ip = ?', [id, request.remote_addr])
+    if v:
+        return redirect(url_for("poll", id=id))
     g.db.execute('insert into votes (poll_id, option_id, ip) VALUES (?, ?, ?)', [id, option, ip])
     v = query_db('select voters from options where poll_id = ? and option = ?', [id, option], one=True)
     g.db.execute('update options set voters = ? where poll_id = ? and option = ?', [v['voters'] + 1, id, option])
