@@ -2,10 +2,157 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>投票结果</title>
+    <title>{{ title }} - 结果</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    	html {
+    		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    	}
+    	* {
+    		box-sizing: border-box;
+    	}
+    	a, input, button { 
+    		outline:none; 
+    	}
+    	body {
+    		background: #ffd756;
+    		max-width: 660px;
+    		margin: 0 auto;
+    		font-size: 14px;
+    	}
+    	#question {
+		    margin: 0;
+    		font-weight: normal;
+		    display: block;
+		    background: 0;
+		    border: 0;
+		    width: 100%;
+		    font-size: 24px;
+		    line-height: 29px;
+		    letter-spacing: .6px;
+		    padding: 22px 14px;
+		    word-break: break-word;
+    	}
+    	#form-body {
+		    border-bottom: 2px solid #b1b874;
+		    margin-bottom: 10px;
+    	}
+    	#form-footer {
+    		padding: 10px;
+    	}
+    	.options {
+		    border-top: 2px solid #b1b874;
+    	}
+    	input[type="radio"] {
+    		position: absolute;
+		    left: 14px;
+    		top: 15px;
+		    width: 30px;
+		    height: 30px;
+		    opacity: 0;
+		    z-index: 2;
+		    cursor: pointer;
+    	}
+    	.option-text {
+    		margin: 0 0 0 14px;
+		    display: block;
+		    font-size: 20px;
+		    line-height: 30px;
+		    padding-top: 15px;
+		    padding-bottom: 15px;
+	        border: 0;
+		    background: 0;
+		    padding: 0 14px 0 0;
+	        flex-grow: 1;
+    	}
+    	p span {
+		    display: inline-block;
+	        font-size: 13px;
+		    font-weight: normal;
+		    float: right;
+    	}
+    	.button {
+		    display: block;
+		    width: 100%;
+		    font-weight: bold;
+		    color: #fff;
+		    font-size: 18px;
+		    line-height: 70px;
+		    border-radius: 3px;
+		    cursor: pointer;
+		    border: 0;
+		    padding: 0;
+		    margin-bottom: 10px;
+		    text-decoration: none;
+		    text-align: center;
+    	}
+    	#back-btn {
+	        background: #ca302c;
+    	}
+    	#copy-link-btn {
+    		background: #7c805d;
+    	}
+    	.option-count::after {
+		    content: 'Votes';
+		    display: inline-block;
+		    margin-left: 3px;
+    	}
+    	.option-data {
+		    display: flex;
+		    justify-content: space-between;
+		    border-top: 2px solid #b1b874;
+		    height: 40px;
+		    line-height: 38px;
+    	}
+    	.percentage-bar {
+		    height: 38px;
+		    -ms-flex: 1;
+		    flex: 1;
+		    margin-left: -14px!important;
+    		background: rgb(31, 119, 180);
+    	}
+    	.option-stats {
+		    font-weight: bold;
+		    text-align: right;
+		    width: 74px;
+    	}
+    </style>
 </head>
 <body>
-    <p>略略略</p>
+	<h2 id="question">这是一个简单的问题？</h2>
+	<div id="form-body">
+    	<div class="options">
+		    <p class="option-text">
+		    	这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项
+		    	<span class="option-count">23</span>
+		    </p>
+		    <div class="option-data">
+		    	<div class="percentage-bar"></div>
+		    	<div class="option-stats">10</div>
+		    </div>
+    	</div>
+    	<div class="options">
+		    <p class="option-text">
+		    	这是另外一个选项
+		    	<span class="option-count">12</span>
+		    </p>
+		    <div class="option-data">
+		    	<div class="percentage-bar"></div>
+		    	<div class="option-stats">10</div>
+		    </div>
+    	</div>
+	</div>
+    <div id="form-footer">
+		<a id="back-btn" class="button" href="{{ request.url_root }}">Back</a>
+	    <button type="button" class="button" id="copy-link-btn" data-clipboard-text="{{ request.base_url }}">Copy Link to Share</button>
+    </div>
 </body>
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.slim.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.13/clipboard.min.js"></script>
+<script type="text/javascript">
+	new Clipboard('#copy-link-btn');
+	$('#copy-link-btn').click(function() {
+		$(this).html("&#10003;");
+	});
+</script>
 </html>

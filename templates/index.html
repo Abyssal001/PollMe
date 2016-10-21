@@ -17,7 +17,7 @@
     	body {
     		background: #ffd756;
     		max-width: 660px;
-    		margin: auto 0;
+    		margin: 0 auto;
     	}
     	#form-body {
 		    border-bottom: 2px solid #b1b874;
@@ -59,6 +59,11 @@
 		    padding: 22px 14px;
 		    word-break: break-word;
     	}
+    	#err-msg {
+    		width: 100%;
+    		padding: 10px 20px;
+    		color: #ca302c;
+    	}
     	#create-btn {
 		    display: block;
 		    width: 100%;
@@ -80,15 +85,16 @@
     	<input type="text" name="question" placeholder="填入一个问题..." autocomplete="off">
     	<div id="form-body">
 	    	<div class="options">
-	    		<input type="text" name="option-1" placeholder="选项1..." autocomplete="off">
+	    		<input type="text" class="option" name="option-1" placeholder="选项1..." autocomplete="off">
 	    	</div>
 	    	<div class="options">
-	    		<input type="text" name="option-2" placeholder="选项2..." autocomplete="off">
+	    		<input type="text" class="option" name="option-2" placeholder="选项2..." autocomplete="off">
 	    	</div>
 	    	<div class="options">
-	    		<input type="text" name="option-3" placeholder="选项3..." autocomplete="off">
+	    		<input type="text" class="option" name="option-3" placeholder="选项3..." autocomplete="off">
 	    	</div>
     	</div>
+    	<div id="err-msg"></div>
 	    <div id="form-footer">
 		    <button type="submit" id="create-btn">Create</button>
 	    </div>
@@ -97,8 +103,30 @@
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.slim.min.js"></script>
 <script type="text/javascript">
 	var option_num = 3;
-	$('input').change(function () {
-		console.log($(this).val());
-	})
+	$('form').submit(function() {
+		var valid_option_num = 0
+		for(var i of $('.option')) {
+			if ($(i).val() != "") {
+				valid_option_num += 1;
+			}
+		}
+		if (valid_option_num < 2) {
+			$("#err-msg").html("警告：至少要有两个选项。");
+			return false
+		}
+		if($('input[name="question"]').val() == "") {
+			$("#err-msg").html("警告：问题不能为空！");
+			return false;
+		}
+		$("#err-msg").html("");
+		return false;
+	});
+	$(document).on('click', 'input', function() {
+		var name = $(this).attr('name');
+		if(Number(name.substr(name.length-1, name.length)) == option_num) {
+			option_num += 1
+			$("#form-body").append('<div class="options"><input type="text" class="option" name="option-' + option_num + '" placeholder="选项' + option_num + '..." autocomplete="off"></div>')
+		}
+	});
 </script>
 </html>

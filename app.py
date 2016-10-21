@@ -8,6 +8,7 @@ from flask import *
 app = Flask(__name__)
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'db/main.db'),
+    HOST='0.0.0.0',
     DEBUG=True,
     SECRET_KEY=os.urandom(24)
 ))
@@ -49,10 +50,10 @@ def poll(id):
     print p
     if p is []:
         return redirect(url_for('page_not_found'))
-    return render_template('poll.html', title="123")
+    return render_template('result.html', title="123")
 
 
-@app.route('/', methods=['POST'])
+@app.route('/polls', methods=['POST'])
 def create():
     g.db.execute('insert into polls (question, is_multi, create_at) VALUES (?, ?, ?)', [question, is_multi, int(time.time())])
     g.db.commit()
