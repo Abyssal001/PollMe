@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>TuT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    	html {
+    		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    	}
+    	* {
+    		box-sizing: border-box;
+    	}
+    	a, input, button { 
+    		outline:none; 
+    	}
+    	body {
+    		background: #ffd756;
+    		max-width: 660px;
+    		margin: auto 0;
+    		text-align: center;
+    		padding: 10px;
+    	}
+    	a {
+		    display: block;
+		    width: 100%;
+		    font-weight: bold;
+		    color: #fff;
+		    font-size: 18px;
+		    line-height: 70px;
+		    border-radius: 3px;
+		    cursor: pointer;
+		    border: 0;
+		    padding: 0;
+		    margin-top: 60px;
+	        background: #ca302c;
+	        text-decoration: none;
+    	}
+    </style>
+</head>
+<body>
+	<p style="font-size: 50px;">TuT</p>
+	<p>嘤嘤...找不到啦！</p>
+    <a href="{{ request.url_root }}">Back</a>
+</body>
+</html>

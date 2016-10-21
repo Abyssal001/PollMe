@@ -2,9 +2,155 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>请投票！</title>
+    <title>{{ title }} - 请投票！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    	html {
+    		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    	}
+    	* {
+    		box-sizing: border-box;
+    	}
+    	a, input, button { 
+    		outline:none; 
+    	}
+    	body {
+    		background: #ffd756;
+    		max-width: 660px;
+    		margin: auto 0;
+    	}
+    	#question {
+		    margin: 0;
+    		font-weight: normal;
+		    display: block;
+		    background: 0;
+		    border: 0;
+		    width: 100%;
+		    font-size: 24px;
+		    line-height: 29px;
+		    letter-spacing: .6px;
+		    padding: 22px 14px;
+		    word-break: break-word;
+    	}
+    	#form-body {
+		    border-bottom: 2px solid #b1b874;
+		    margin-bottom: 10px;
+    	}
+    	#form-footer {
+    		padding: 10px;
+    	}
+    	.options {
+		    padding-left: 14px;
+		    line-height: 60px;
+		    display: flex;
+		    position: relative;
+		    border-top: 2px solid #b1b874;
+    	}
+    	input[type="radio"] {
+    		position: absolute;
+		    left: 14px;
+    		top: 15px;
+		    width: 30px;
+		    height: 30px;
+		    opacity: 0;
+		    z-index: 2;
+		    cursor: pointer;
+    	}
+    	label {
+		    min-height: 60px;
+		    font-size: 20px;
+		    font-weight: normal;
+		    padding: 0 14px 0 45px;
+		    word-break: break-word;
+		    line-height: 30px;
+		    cursor: pointer;
+            border: 0;
+    		background: 0;
+    	}
+    	label span {
+		    display: inline-block;
+	    	margin-top: 16px;
+	    	padding-bottom: 14px;
+	        font-size: 20px;
+		    font-weight: normal;
+    	}
+    	label::before {
+		    top: 0;
+		    left: 0;
+		    background: #fff;
+		    border: 2px solid #e4b827;
+		    width: 30px;
+		    height: 30px;
+	        content: '';
+		    position: absolute;
+		    pointer-events: none;
+	        left: 14px;
+	    	top: 15px;
+    	}
+    	label::after {
+		    top: 10px;
+    		left: 19px;
+		    display: none;
+		    top: -5px;
+		    left: 5px;
+		    width: 30px;
+		    height: 30px;
+		    background: url({{ url_for('static', filename = 'images/check.svg') }}) center/contain no-repeat;
+		    z-index: 2;
+		    content: '';
+		    position: absolute;
+		    pointer-events: none;images
+    	}
+    	button {
+		    display: block;
+		    width: 100%;
+		    font-weight: bold;
+		    color: #fff;
+		    font-size: 18px;
+		    line-height: 70px;
+		    border-radius: 3px;
+		    cursor: pointer;
+		    border: 0;
+		    padding: 0;
+		    margin-bottom: 10px;
+    	}
+    	#vote-btn {
+	        background: #ca302c;
+    	}
+    	#copy-link-btn {
+    		background: #7c805d;
+    	}
+    </style>
 </head>
 <body>
-    <p>略略略</p>
+    <form>
+    	<h2 id="question">这是一个简单的问题？</h2>
+    	<div id="form-body">
+	    	<div class="options">
+			    <input type="radio">
+			    <label>
+			    	<span>这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项这是一个选项</span>
+			    </label>
+	    	</div>
+	    	<div class="options">
+			    <input type="radio">
+			    <label>
+			    	<span>这是另外一个选项</span>
+			    </label>
+	    	</div>
+    	</div>
+	    <div id="form-footer">
+		    <button type="submit" id="vote-btn">Vote</button>
+		    <button type="button" id="copy-link-btn" data-clipboard-text="{{ request.base_url }}">Copy Link to Share</button>
+	    </div>
+    </form>
 </body>
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.slim.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.13/clipboard.min.js"></script>
+<script type="text/javascript">
+	new Clipboard('#copy-link-btn');
+	$('#copy-link-btn').click(function() {
+		$(this).html("&#10003;");
+	});
+</script>
 </html>

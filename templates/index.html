@@ -3,8 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <title>Poll.me</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    	html {
+    		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    	}
+    	* {
+    		box-sizing: border-box;
+    	}
+    	a, input, button { 
+    		outline:none; 
+    	}
+    	body {
+    		background: #ffd756;
+    		max-width: 660px;
+    		margin: auto 0;
+    	}
+    	#form-body {
+		    border-bottom: 2px solid #b1b874;
+		    margin-bottom: 10px;
+    	}
+    	#form-footer {
+    		padding: 10px;
+    	}
+    	.options {
+		    padding-left: 14px;
+		    line-height: 60px;
+		    display: flex;
+		    position: relative;
+		    border-top: 2px solid #b1b874;
+    	}
+    	input {
+		    margin: 0;
+    		font-weight: normal;
+		    display: block;
+		    background: 0;
+		    border: 0;
+		    width: 100%;
+		    font-size: 20px;
+		    line-height: 29px;
+		    letter-spacing: .6px;
+		    padding: 15px 14px;
+		    word-break: break-word;
+    	}
+    	input[name="question"] {
+		    margin: 0;
+    		font-weight: normal;
+		    display: block;
+		    background: 0;
+		    border: 0;
+		    width: 100%;
+		    font-size: 24px;
+		    line-height: 29px;
+		    letter-spacing: .6px;
+		    padding: 22px 14px;
+		    word-break: break-word;
+    	}
+    	#create-btn {
+		    display: block;
+		    width: 100%;
+		    font-weight: bold;
+		    color: #fff;
+		    font-size: 18px;
+		    line-height: 70px;
+		    border-radius: 3px;
+		    cursor: pointer;
+	        background: #ca302c;
+		    border: 0;
+		    padding: 0;
+		    margin-bottom: 10px;
+    	}
+    </style>
 </head>
 <body>
-    <p>略略略</p>
+    <form>
+    	<input type="text" name="question" placeholder="填入一个问题..." autocomplete="off">
+    	<div id="form-body">
+	    	<div class="options">
+	    		<input type="text" name="option-1" placeholder="选项1..." autocomplete="off">
+	    	</div>
+	    	<div class="options">
+	    		<input type="text" name="option-2" placeholder="选项2..." autocomplete="off">
+	    	</div>
+	    	<div class="options">
+	    		<input type="text" name="option-3" placeholder="选项3..." autocomplete="off">
+	    	</div>
+    	</div>
+	    <div id="form-footer">
+		    <button type="submit" id="create-btn">Create</button>
+	    </div>
+    </form>
 </body>
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.slim.min.js"></script>
+<script type="text/javascript">
+	var option_num = 3;
+	$('input').change(function () {
+		console.log($(this).val());
+	})
+</script>
 </html>

@@ -33,26 +33,33 @@ def query_db(query, args=(), one=False):
     return (rv[0] if rv else None) if one else rv
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
 
 
-@app.route('/<id>', methods=['GET'])
+@app.route('/polls/<id>', methods=['GET'])
 def poll(id):
     p = query_db('select * from polls where id = ?', [id])
     print p
-    return render_template('poll.html', poll=p)
+    if p is []:
+        return redirect(url_for('page_not_found'))
+    return render_template('poll.html', title="123")
 
 
 @app.route('/', methods=['POST'])
 def create():
     g.db.execute('insert into polls (question, is_multi, create_at) VALUES (?, ?, ?)', [question, is_multi, int(time.time())])
     g.db.commit()
-    return redirect(url_for('poll', ))
+    return redirect(url_for('poll'))
 
 
-@app.route('/<id>', methods=['POST'])
+@app.route('/polls/<id>', methods=['POST'])
 def vote():
     return render_template('index.html')
 
