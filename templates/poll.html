@@ -146,12 +146,8 @@
 		$(this).html("&#10003;");
 	});
     $('.options').click(function () {
-        for (var i in $('.options input')) {
-            $(i).removeAttr("checked");
-        }
-        for (var i in $('.options label')) {
-            $(i).removeClass("checked");
-        }
+        $('.options input').removeAttr("checked");
+        $('.options label').removeClass("checked");
         $(this).children("input").attr("checked", "true");
         $(this).children("label").addClass("checked")
     });
