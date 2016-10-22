@@ -99,5 +99,10 @@ def vote(id):
     return redirect(url_for("poll", id=id))
 
 
+@app.route('/ip', methods=['GET'])
+def ip():
+    return str(request.remote_addr)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
