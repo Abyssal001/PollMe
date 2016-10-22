@@ -49,7 +49,10 @@ def poll(id):
     p = query_db('select * from polls where id = ?', [id], one=True)
     if p is None:
         abort(404)
-    v = query_db('select * from votes where poll_id = ? and ip = ?', [id, request.remote_addr])
+    ip = request.remote_addr
+    if request.headers.getlist("X-Forwarded-For"):
+        ip = request.headers.getlist("X-Forwarded-For")[0]
+    v = query_db('select * from votes where poll_id = ? and ip = ?', [id, ip])
     options = query_db('select * from options where poll_id = ?', [id])
     if v:
         total = 0
@@ -91,7 +94,7 @@ def vote(id):
     if request.headers.getlist("X-Forwarded-For"):
         ip = request.headers.getlist("X-Forwarded-For")[0]
     option = request.form.get('option', '1')
-    v = query_db('select * from votes where poll_id = ? and ip = ?', [id, request.remote_addr])
+    v = query_db('select * from votes where poll_id = ? and ip = ?', [id, ip])
     if v:
         return redirect(url_for("poll", id=id))
     g.db.execute('insert into votes (poll_id, option_id, ip) VALUES (?, ?, ?)', [id, option, ip])
