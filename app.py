@@ -101,7 +101,12 @@ def vote(id):
 
 @app.route('/ip', methods=['GET'])
 def ip():
-    return str(request.remote_addr)
+    ip = ""
+    if request.headers.getlist("X-Forwarded-For"):
+        ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        ip = request.remote_addr
+    return str(ip)
 
 
 if __name__ == '__main__':
