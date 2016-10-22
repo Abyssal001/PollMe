@@ -88,6 +88,8 @@ def create():
 @app.route('/polls/<id>', methods=['POST'])
 def vote(id):
     ip = request.remote_addr
+    if request.headers.getlist("X-Forwarded-For"):
+        ip = request.headers.getlist("X-Forwarded-For")[0]
     option = request.form.get('option', '1')
     v = query_db('select * from votes where poll_id = ? and ip = ?', [id, request.remote_addr])
     if v:
